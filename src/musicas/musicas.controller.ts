@@ -1,8 +1,12 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Res } from '@nestjs/common';
+import { MusicasService } from './musicas.service';
 
 @Controller('musicas')
 export class MusicasController {
 
+    constructor(private readonly musicasService: MusicasService){
+
+    }
     @Get()
     findAll(@Res() response){
         return response.status(200).json({message: 'Listagem de Cursos'});
