@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Musicas } from './musicas.entity';
 
 @Injectable()
@@ -18,7 +18,11 @@ export class MusicasService {
     }
 
     findOne(id: number){
-        return this.musicas.find(musica => musica.id === id)
+        const musica =  this.musicas.find(musica => musica.id === id)
+        if(!musica){
+            throw new HttpException(`Musica ID ${id} not fount`, HttpStatus.NOT_FOUND)
+        }
+        return musica
     }
 
     create(createMusicaDto: any){
@@ -29,7 +33,7 @@ export class MusicasService {
     update(id: number, updateMusicaDto: any){
         const idMusica = this.findOne(id)
 
-        if(idMusica){
+        if(idMusica as any){
             const index = this.musicas.findIndex(musica => musica.id === id)
             this.musicas[index] = {
                 id,

@@ -1,5 +1,7 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { MusicasService } from './musicas.service';
+import { CreateMusicaDTO } from './dto/create-musica.dto';
+import { UpdateMusicaDTO } from './dto/update-musica.dto';
 
 @Controller('musicas')
 export class MusicasController {
@@ -8,29 +10,28 @@ export class MusicasController {
 
     }
     @Get()
-    findAll(@Res() response){
-        return response.status(200).json({message: 'Listagem de Cursos'});
+    findAll(){
+        return this.musicasService.findAll();
     }
     @Get(':id')
-    findOne(@Param('id') id: string){
-        return `Música com Id ${id}`
+    findOne(@Param('id') id: number){
+        return this.musicasService.findOne(id)
     }
 
     
     @Post()
-    create(@Body() body){
-        return body;
+    create(@Body() CreateMusicaDTO){
+        return this.musicasService.create(CreateMusicaDTO);
     }
 
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() body ){
-        console.log(body);
-        return `Update da musica ${id}`;
+    @Put(':id')
+    update(@Param('id') id: number, @Body() UpdateMusicaDTO: UpdateMusicaDTO ){
+        return this.musicasService.update(id,UpdateMusicaDTO);
     }
 
     @HttpCode(HttpStatus.NO_CONTENT)
     @Delete(':id')
-    remove(@Param('id') id: string){
-        return `Deletada Musica ${id}`
+    remove(@Param('id') id: number){
+        return this.musicasService.remove(id);
     }
 }
