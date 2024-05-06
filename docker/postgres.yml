@@ -1,0 +1,36 @@
+version: '3'
+services:
+volumes:
+    postgres-data:
+    pgadmin:
+networks:
+    backend:
+services:
+    postgres:
+        image: postgres:11.19-alpine3.17
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_PASSWORD: 12345
+            POSTGRES_USER: coroeorquestra
+            POSTGRES_DB: coroeorquestra
+            PGDATA: /var/lib/postgresql/data
+        networks:
+            - backend
+    pgadmin:
+      image: dpage/pgadmin4:4.23
+      environment:
+        PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+        PGADMIN_DEFAULT_PASSWORD: password
+        PGADMIN_LISTEN_PORT: 8080
+      ports:
+        - 8088:8080
+      volumes:
+        - pgadmin:/var/lib/pgadmin
+      depends_on:
+        - postgres
+      networks:
+            - backend
+
