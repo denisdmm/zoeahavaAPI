@@ -1,24 +1,26 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Musicas } from './musicas.entity';
-
+import { HttpException, HttpStatus, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Musicas } from '../entities/musicas.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class MusicasService {
-    private musicas: Musicas[] = [
-        {
-            id: 1,
-            nome: "Let me soul",
-            description: "musica linsta",
-            instrumentos: ['sax alto', 'sax tonor','violino', 'piano']
-        }
+    
+    constructor(
+        @InjectRepository(Musicas)
+        private readonly musicaRepository: Repository<Musicas>
+    ){
 
-    ]
+   }
 
-    findAll(){
-        return this.musicas;
+
+    async findAll(){
+        return this.musicaRepository.find();
     }
 
-    findOne(id: number){
-        const musica =  this.musicas.find(musica => musica.id === id)
+    async findOne(id: number){
+        const musica = await this.musicaRepository.findOne({
+            where: { id},
+        }) 
         if(!musica){
             throw new HttpException(`Musica ID ${id} not fount`, HttpStatus.NOT_FOUND)
         }
@@ -27,27 +29,32 @@ export class MusicasService {
 
     create(createMusicaDto: any){
 
-        this.musicas.push(createMusicaDto)
+        const musica = this.musicaRepository.create(createMusicaDto)
+        return this.musicaRepository.save(musica)
     }
 
-    update(id: number, updateMusicaDto: any){
-        const idMusica = this.findOne(id)
-
-        if(idMusica as any){
-            const index = this.musicas.findIndex(musica => musica.id === id)
-            this.musicas[index] = {
-                id,
-                ...updateMusicaDto
-            }
+    async update(id: number, updateMusicaDto: any){
+        const musica = await this.musicaRepository.preload({
+            ...updateMusicaDto,
+            id
+        })
+        if (!musica) {
+            throw new HttpException(`Musica ID ${id} not fount`, HttpStatus.NOT_FOUND)
         }
+
+        return this.musicaRepository.save(musica)
+        
     }
 
-    remove(id: number){
-        const index = this.musicas.findIndex(musica => musica.id === id)
+    async remove(id: number){
+        const musica = await this.musicaRepository.findOne({
+            where: {id}
+        })
+        if(!musica){
 
-        if(index > 0){
-            this.musicas.splice(index, 1)
+            throw new NotFoundException(`Música com ${id}, não encontrada`)
         }
+        return this.musicaRepository.remove(musica)
     }
 }
 
