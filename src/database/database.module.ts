@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Musicas } from 'src/entities/musicas.entity';
+import { Instrumentos } from 'src/models/instrumentos.entity';
+import { Musicas } from 'src/models/musicas.entity';
 import { DataSourceOptions } from 'typeorm';
 
 export const dataSourceOptions: DataSourceOptions = {
@@ -11,7 +12,8 @@ export const dataSourceOptions: DataSourceOptions = {
     password: '12345',
     database: 'coroeorquestra',
     entities: [
-        Musicas
+        Musicas,
+        Instrumentos
     ],
     synchronize: true
 

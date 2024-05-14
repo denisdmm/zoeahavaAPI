@@ -1,10 +1,12 @@
-import { IsBoolean, IsString } from "class-validator";
+import { IsBoolean, IsString, isString } from "class-validator";
 
 export class CreateMusicaDTO{
     @IsString()
     readonly nomeMusica: string;
     @IsString()
-	readonly tom: string;
+	readonly tonalidade: string;
+    @IsString()
+    readonly descricao: string;
     @IsString()
     readonly compositor: string;
     @IsString()
