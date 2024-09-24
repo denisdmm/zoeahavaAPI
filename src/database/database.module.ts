@@ -2,18 +2,20 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Instrumentos } from 'src/models/instrumentos.entity';
 import { Musicas } from 'src/models/musicas.entity';
+import { Usuario } from 'src/models/usuario.entity';
 import { DataSourceOptions } from 'typeorm';
 
 export const dataSourceOptions: DataSourceOptions = {
     type: 'postgres',
-    host: '172.22.0.1',
+    host: '172.17.0.1',
     port: 5432,
-    username: 'coroeorquestra',
-    password: '12345',
-    database: 'coroeorquestra',
+    username: 'postgres',
+    password: 'password',
+    database: 'coroeorquestraDB',
     entities: [
         Musicas,
-        Instrumentos
+        Instrumentos,
+        Usuario
     ],
     synchronize: true
 
