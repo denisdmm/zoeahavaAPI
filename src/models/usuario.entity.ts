@@ -11,9 +11,8 @@ export class Usuario {
     @Column()
     sobrenome: string
 
-    @Column()
-    cpf: number
-
+    @Column({ length: 11, unique: true })
+    cpf: string
 
     @Column()
     senha: string
@@ -24,6 +23,5 @@ export class Usuario {
 
     @Column({ default: true })
     isActive: boolean;
-
 
 }
