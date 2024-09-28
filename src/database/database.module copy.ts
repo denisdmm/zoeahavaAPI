@@ -7,11 +7,11 @@ import { DataSourceOptions } from 'typeorm';
 
 export const dataSourceOptions: DataSourceOptions = {
     type: 'postgres',
-    host: 'motty.db.elephantsql.com',
+    host: '172.17.0.1',
     port: 5432,
-    username: 'fqqhoqqt',
-    password: 'gk-GVRQ_vnd8uEIBacQ5YFNv21pIXGEx',
-    database: 'fqqhoqqt',
+    username: 'postgres',
+    password: 'password',
+    database: 'coroeorquestraDB',
     entities: [
         Musicas,
         Instrumentos,
