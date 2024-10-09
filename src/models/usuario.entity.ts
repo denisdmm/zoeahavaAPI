@@ -1,4 +1,4 @@
-import { Column, Entity, IntegerType, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity('usuarios')
 export class Usuario {
@@ -17,9 +17,11 @@ export class Usuario {
     @Column()
     senha: string
 
-
     @Column()
     email: string
+
+    @Column({type: 'date' })
+    dataNascimento: Date;
 
     @Column({ default: true })
     isActive: boolean;

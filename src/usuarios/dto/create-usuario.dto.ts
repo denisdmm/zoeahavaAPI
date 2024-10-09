@@ -1,4 +1,6 @@
-import { IsBoolean, IsEmail, IsNumber, IsString, Length } from "class-validator"
+import { Type } from "class-transformer"
+import { IsBoolean, IsDate, IsEmail, IsString, Length } from "class-validator"
+import { IsNull } from "typeorm"
 
 export class CreateUsuarioDto {
     @IsString()
@@ -12,6 +14,9 @@ export class CreateUsuarioDto {
     senha: string
     @IsEmail()
     email: string
+    @IsDate( )
+    @Type(() => Date) // Transforma a string do request em Date
+    dataNascimento: Date
     @IsBoolean()
     isActive: boolean;
 
