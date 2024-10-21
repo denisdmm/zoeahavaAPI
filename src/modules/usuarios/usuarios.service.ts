@@ -33,6 +33,15 @@ export class UsuariosService {
     return usuario
   }
 
+  async findByNomeUsuario(nomeUsuario: string): Promise<Usuario | undefined> {
+    const user = nomeUsuario
+    return this.usuarioRepository
+    .createQueryBuilder('user')
+    .where('user.nomeUsuario = :nomeUsuario', { nomeUsuario })
+    .getOne();
+  }
+
+
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
     const usuario = await this.usuarioRepository.preload({
       ...updateUsuarioDto,
