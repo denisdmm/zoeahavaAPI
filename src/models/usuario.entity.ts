@@ -1,29 +1,33 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 @Entity('usuarios')
+@Unique(['cpf'])
+@Unique(['login'])
 export class Usuario {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    nomeUsuario: string
+  @Column()
+  nomeUsuario: string;
 
-    @Column()
-    sobrenome: string
+  @Column()
+  sobrenome: string;
 
-    @Column({ length: 11, unique: true })
-    cpf: string
+  @Column({ length: 11, unique: true })
+  cpf: string;
 
-    @Column()
-    senha: string
+  @Column({ unique: true })
+  login: string;
 
-    @Column()
-    email: string
+  @Column()
+  senha: string;
 
-    @Column({type: 'date' })
-    dataNascimento: Date;
+  @Column()
+  email: string;
 
-    @Column({ default: true })
-    isActive: boolean;
+  @Column({ type: 'date' })
+  dataNascimento: Date;
 
+  @Column({ default: true })
+  isActive: boolean;
 }

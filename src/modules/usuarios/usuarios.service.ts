@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Usuario } from 'src/models/usuario.entity';
@@ -7,14 +12,13 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsuariosService {
-
   constructor(
     @InjectRepository(Usuario)
-    private usuarioRepository: Repository<Usuario>
-  ) { }
+    private usuarioRepository: Repository<Usuario>,
+  ) {}
 
   async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
-    const usuario = this.usuarioRepository.create(createUsuarioDto)
+    const usuario = this.usuarioRepository.create(createUsuarioDto);
     return await this.usuarioRepository.save(usuario);
   }
 
@@ -24,45 +28,51 @@ export class UsuariosService {
 
   async findOne(id: number) {
     const usuario = await this.usuarioRepository.findOne({
-      where: { id }
-    })
+      where: { id },
+    });
     if (!usuario) {
-      throw new HttpException(`Usuario ID ${id} not found`,
-        HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        `Usuario ID ${id} not found`,
+        HttpStatus.NOT_FOUND,
+      );
     }
-    return usuario
+    return usuario;
   }
 
-  async findByNomeUsuario(nomeUsuario: string): Promise<Usuario | undefined> {
-    const user = nomeUsuario
-    return this.usuarioRepository
-    .createQueryBuilder('user')
-    .where('user.nomeUsuario = :nomeUsuario', { nomeUsuario })
-    .getOne();
+  async findByCpf(cpf: string): Promise<Usuario | undefined> {
+    return this.usuarioRepository.findOne({
+      where: { cpf },
+    });
   }
 
+  async findByLogin(login: string): Promise<Usuario | undefined> {
+    return this.usuarioRepository.findOne({
+      where: { login },
+    });
+  }
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
     const usuario = await this.usuarioRepository.preload({
       ...updateUsuarioDto,
-      id
-    })
+      id,
+    });
     if (!usuario) {
-      throw new HttpException(`Usuarios ID ${id} not found`, HttpStatus.NOT_FOUND)
+      throw new HttpException(
+        `Usuarios ID ${id} not found`,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
-    return this.usuarioRepository.save(usuario)
+    return this.usuarioRepository.save(usuario);
   }
 
   async remove(id: number) {
     const usuario = await this.usuarioRepository.findOne({
-      where: { id }
-    })
+      where: { id },
+    });
     if (!usuario) {
-
-      throw new NotFoundException(`Usuario com ${id}, não encontrado`)
+      throw new NotFoundException(`Usuario com ${id}, não encontrado`);
     }
-    return this.usuarioRepository.remove(usuario)
+    return this.usuarioRepository.remove(usuario);
   }
 }
-

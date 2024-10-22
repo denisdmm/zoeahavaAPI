@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, HttpCode, HttpStatus, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+  HttpCode,
+  HttpStatus,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -6,9 +17,7 @@ import { Usuario } from 'src/models/usuario.entity';
 
 @Controller('/api/usuarios')
 export class UsuariosController {
-  constructor(
-    private readonly usuarioService: UsuariosService) { }
-
+  constructor(private readonly usuarioService: UsuariosService) {}
 
   @Post()
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
@@ -25,13 +34,24 @@ export class UsuariosController {
     return this.usuarioService.findOne(id);
   }
 
-  @Get(":nomeUsuario")
-  async findusuario(@Param('nomeUsuario') nomeUsuario: any ): Promise<Usuario> {
-    const user = await this.usuarioService.findByNomeUsuario(nomeUsuario);
+  @Get('/find/:cpf')
+  async findusuarioByCpf(@Param('cpf') cpf: any): Promise<Usuario> {
+    const user = await this.usuarioService.findByCpf(cpf);
+    if (!user) {
+      throw new NotFoundException(`User with name "${cpf}" not found`);
+    }
+    return user;
+  }
+
+  @Get('/findlogin/:nomeUsuario')
+  async findusuarioByLogin(
+    @Param('nomeUsuario') nomeUsuario: any,
+  ): Promise<Usuario> {
+    const user = await this.usuarioService.findByLogin(nomeUsuario);
     if (!user) {
       throw new NotFoundException(`User with name "${nomeUsuario}" not found`);
     }
-    return user
+    return user;
   }
 
   @Put(':id')
