@@ -19,6 +19,7 @@ export class UsuariosService {
 
   async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
     const usuario = this.usuarioRepository.create(createUsuarioDto);
+    
     return await this.usuarioRepository.save(usuario);
   }
 
@@ -39,16 +40,22 @@ export class UsuariosService {
     return usuario;
   }
 
-  async findByCpf(cpf: string): Promise<Usuario | undefined> {
-    return this.usuarioRepository.findOne({
+  findByCpf(cpf: string) {
+    
+    const user =  this.usuarioRepository.findOne({
       where: { cpf },
     });
+    return user
+
   }
 
-  async findByLogin(login: string): Promise<Usuario | undefined> {
-    return this.usuarioRepository.findOne({
-      where: { login },
+  async findByLogin(loginName: string) {
+
+    const user = await this.usuarioRepository.findOne({
+      where: { loginName: loginName },
     });
+
+    return user
   }
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {

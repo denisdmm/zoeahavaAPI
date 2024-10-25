@@ -10,7 +10,7 @@ export class CreateUsuarioDto {
   @Length(11, 11, { message: 'CPF deve conter 11 caracteres' })
   cpf: string;
   @IsString()
-  login: string;
+  loginName: string;
   @IsString()
   senha: string;
   @IsEmail()
@@ -20,4 +20,6 @@ export class CreateUsuarioDto {
   dataNascimento: Date;
   @IsBoolean()
   isActive: boolean;
+  @IsString()
+  refreshToken: string
 }

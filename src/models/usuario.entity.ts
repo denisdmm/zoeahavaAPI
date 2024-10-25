@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Entity('usuarios')
 @Unique(['cpf'])
-@Unique(['login'])
+@Unique(['loginName'])
 export class Usuario {
   @PrimaryGeneratedColumn()
   id: number;
@@ -17,7 +18,7 @@ export class Usuario {
   cpf: string;
 
   @Column({ unique: true })
-  login: string;
+  loginName: string;
 
   @Column()
   senha: string;
@@ -30,4 +31,14 @@ export class Usuario {
 
   @Column({ default: true })
   isActive: boolean;
+
+  // Adiciona a coluna para armazenar o refreshToken
+  @Column({ nullable: true }) // nullable: true se for opcional
+  refreshToken: string | null;
+ 
+  @BeforeInsert()
+  async hashPassword() {
+    const saltRounds = 10;
+    this.senha = await bcrypt.hash(this.senha, saltRounds);
+  }
 }

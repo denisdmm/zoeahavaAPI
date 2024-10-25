@@ -34,7 +34,7 @@ export class UsuariosController {
     return this.usuarioService.findOne(id);
   }
 
-  @Get('/find/:cpf')
+  @Get('/logincpf/:cpf')
   async findusuarioByCpf(@Param('cpf') cpf: any): Promise<Usuario> {
     const user = await this.usuarioService.findByCpf(cpf);
     if (!user) {
@@ -43,13 +43,13 @@ export class UsuariosController {
     return user;
   }
 
-  @Get('/findlogin/:nomeUsuario')
+  @Get('/login/:loginName')
   async findusuarioByLogin(
-    @Param('nomeUsuario') nomeUsuario: any,
+    @Param('loginName') loginName: any,
   ): Promise<Usuario> {
-    const user = await this.usuarioService.findByLogin(nomeUsuario);
+    const user = await this.usuarioService.findByLogin(loginName);
     if (!user) {
-      throw new NotFoundException(`User with name "${nomeUsuario}" not found`);
+      throw new NotFoundException(`User with name "${loginName}" not found`);
     }
     return user;
   }
