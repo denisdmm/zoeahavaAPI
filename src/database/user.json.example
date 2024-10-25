@@ -1,0 +1,10 @@
+{
+"nomeUsuario": "manager",
+"sobrenome": "admin",
+"senha": "admin",
+"email": "admin@zoeahava.com",
+"dataNascimento": "1975-04-23T18:25:43.511Z",
+"isActive": true,
+"cpf": "22222222222",
+"login":"admin"
+}
