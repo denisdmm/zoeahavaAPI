@@ -15,11 +15,11 @@ export class UsuariosService {
   constructor(
     @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
-  ) {}
+  ) { }
 
   async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
     const usuario = this.usuarioRepository.create(createUsuarioDto);
-    
+
     return await this.usuarioRepository.save(usuario);
   }
 
@@ -41,8 +41,8 @@ export class UsuariosService {
   }
 
   findByCpf(cpf: string) {
-    
-    const user =  this.usuarioRepository.findOne({
+
+    const user = this.usuarioRepository.findOne({
       where: { cpf },
     });
     return user
@@ -56,6 +56,13 @@ export class UsuariosService {
     });
 
     return user
+  }
+
+  // Encontra o usuário pelo refresh token
+  async findByRefreshToken(refreshToken: string) {
+    return await this.usuarioRepository.findOne({
+      where: { refreshToken: refreshToken }
+    });
   }
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
