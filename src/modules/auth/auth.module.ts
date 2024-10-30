@@ -13,8 +13,6 @@ import { UsuariosModule } from '../usuarios/usuarios.module';
       global: true,
       imports: [],
       useFactory: async (configService: ConfigService) => {
-        // Adicione esse log para verificar o valor de JWT_SECRET
-        console.log('JWT_SECRET:', configService.get<string>('JWT_SECRET'));
 
         return {
           secret: configService.get<string>('JWT_SECRET'),
