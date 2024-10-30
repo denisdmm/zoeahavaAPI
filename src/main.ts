@@ -11,7 +11,7 @@ async function bootstrap() {
   }))
 
   app.enableCors({
-    origin: 'http://localhost:4200', // Substitua pela origem do front-end
+    origin: process.env.CORS_ORIGIN || 'http://localhost:4200',
     methods: 'GET,POST,PUT,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Authorization',
   });
