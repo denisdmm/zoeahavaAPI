@@ -9,6 +9,13 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
     transform: true
   }))
+
+  app.enableCors({
+    origin: process.env.CORS_ORIGIN || 'http://localhost:4200',
+    methods: 'GET,POST,PUT,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Authorization',
+  });
+
   await app.listen(3000);
 }
 bootstrap();

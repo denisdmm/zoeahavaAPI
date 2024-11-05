@@ -18,10 +18,7 @@ export const dataSourceOptions: DataSourceOptions = {
         Usuario
     ],
     synchronize: true
-
-
 }
- 
 
 @Module({
     imports: [
