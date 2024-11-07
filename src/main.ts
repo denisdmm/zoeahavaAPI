@@ -11,7 +11,7 @@ async function bootstrap() {
   }))
 
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:4200',
+    origin: process.env.CORS_ORIGIN || 'http://localhost:4200' || 'https://alfazoeahava.netlify.app/',
     methods: 'GET,POST,PUT,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Authorization',
   });
