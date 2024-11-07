@@ -20,7 +20,6 @@ export class AuthService {
 
     async signIn(loginName: string, senha: string): Promise<AuthResponseDto> {
         const user = await this.usuarioService.findByLogin(loginName);
-        console.log(user)
         if (!user || !bcryptCompareSync(senha, user.senha)) {
             throw new UnauthorizedException('Credenciais inválidas');
         }
