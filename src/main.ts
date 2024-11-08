@@ -11,19 +11,7 @@ async function bootstrap() {
   }))
 
   app.enableCors({
-    origin: (origin, callback) => {
-      const allowedOrigins = [
-        'https://alfazoeahava.netlify.app',
-        'http://localhost:4200', // Adicione os domínios que você deseja permitir
-        'https://coroeorquestra.netlify.app',
-      ];
-      
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Origin not allowed by CORS'));
-      }
-    },
+    origin: true,  // Permite todas as origens temporariamente
     methods: 'GET,POST,PUT,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true,
