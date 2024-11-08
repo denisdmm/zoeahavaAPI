@@ -11,9 +11,10 @@ async function bootstrap() {
   }))
 
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:4200' || 'https://alfazoeahava.netlify.app/',
+    origin: 'https://alfazoeahava.netlify.app/acesso',
     methods: 'GET,POST,PUT,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Authorization',
+    credentials: true,
   });
 
   await app.listen(3000);
