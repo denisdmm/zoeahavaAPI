@@ -1,5 +1,6 @@
 import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { IsEmail } from 'class-validator';
 
 @Entity('usuarios')
 @Unique(['cpf'])
@@ -9,10 +10,10 @@ export class Usuario {
   id: number;
 
   @Column()
-  nomeUsuario: string;
+  nome: string;
 
   @Column()
-  sobrenome: string;
+  nomeAbreviado: string;
 
   @Column({ length: 11, unique: true })
   cpf: string;
@@ -24,8 +25,25 @@ export class Usuario {
   senha: string;
 
   @Column()
+  @IsEmail()
   email: string;
 
+  @Column({ nullable: true } )
+  instrumento: string;
+
+
+  @Column({  nullable: true, type: 'date' })
+  dataVencimento: Date;
+
+  @Column()
+  membroIC: boolean;
+
+  @Column()
+  autorizadoPastor: boolean;
+
+  @Column()
+  contratoObrigatorio: boolean;
+  
   @Column({ type: 'date' })
   dataNascimento: Date;
 
@@ -41,4 +59,6 @@ export class Usuario {
     const saltRounds = 10;
     this.senha = await bcrypt.hash(this.senha, saltRounds);
   }
+
+
 }

@@ -1,10 +1,10 @@
-import { HttpException, HttpStatus, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Musicas } from 'src/models/musicas.entity';
 import { Instrumentos } from 'src/models/instrumentos.entity';
 import { CreateMusicaDTO } from './dto/create-musica.dto';
 import { UpdateMusicaDTO } from './dto/update-musica.dto';
+import { Musicas } from 'src/models/musicas.entity';
 @Injectable()
 export class MusicasService {
     
