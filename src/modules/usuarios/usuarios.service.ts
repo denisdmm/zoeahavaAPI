@@ -19,7 +19,11 @@ export class UsuariosService {
 
   async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
     const usuario = this.usuarioRepository.create(createUsuarioDto);
-
+    if (!usuario.dataVencimento) {
+      usuario.dataVencimento = null; }
+      if (!usuario.refreshToken) {
+        usuario.refreshToken = null; }
+  
     return await this.usuarioRepository.save(usuario);
   }
 

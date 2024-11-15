@@ -1,11 +1,11 @@
 import { Type } from 'class-transformer';
-import { IsBoolean, IsDate, IsEmail, IsString, Length } from 'class-validator';
+import { isBoolean, IsBoolean, IsDate, IsDateString, IsEmail, IsOptional, IsString, Length } from 'class-validator';
 
 export class CreateUsuarioDto {
   @IsString()
-  nomeUsuario: string;
+  nome: string;
   @IsString()
-  sobrenome: string;
+  nomeAbreviado: string;
   @IsString()
   @Length(11, 11, { message: 'CPF deve conter 11 caracteres' })
   cpf: string;
@@ -20,6 +20,19 @@ export class CreateUsuarioDto {
   dataNascimento: Date;
   @IsBoolean()
   isActive: boolean;
+  @IsString()
+  instrumento: string;
+  @IsDate()
+  @Type(() => Date)
+  @IsOptional()
+  @IsDateString()
+  dataVencimento: Date | null;
+  @IsBoolean()
+  membroIC: boolean;
+  @IsBoolean()
+  autorizadoPastor: boolean;
+  @IsBoolean()
+  contratoObrigatorio: boolean;
   @IsString()
   refreshToken: string
 }
